@@ -25,7 +25,17 @@
             {{form}}
             <input type="submit" value="submit">
         </form>
-        <td>
-
+        <div>
+        {% for plot in plots %}
+            {{plot.start_point}}<br>
+            {{plot.finish_point}}<br>
+            {{plot.interval}}<br>
+            {{plot.step}}<br>
+            {{plot.plot_function}}<br>
+            {{plot.date_upload}}<br>
+            {{plot.date_update}}<br>
+            {{plot.plot_image}}<br>
+        {%endfor%}
+        </div>
     </body>
 </html>
