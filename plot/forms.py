@@ -11,10 +11,9 @@ class PlotForm(ModelForm):
     # step = forms.DecimalField(label='Шаг',min_value=1e-6)
     class Meta:
         model = Plot
-        fields = ['start_point', 'finish_point', 'plot_function', 'step', 'interval']
+        fields = ['start_point', 'plot_function', 'step', 'interval']
         labels = {
             'start_point': 'Начальная точка графика',
-            'finish_point': 'Конечная точка графика',
             'plot_function': 'Зависимость вида f(x)',
             'step': 'Шаг',
             'interval': 'Интервал',
