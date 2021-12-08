@@ -2,15 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.conf import settings
 from django.views.generic.edit import FormView
-from django.views.generic import ListView
-
-import sys
 
 from plot.forms import PlotForm
 from plot.models import Plot, get_plot_path
 from plot.plotmaker import draw_plot
-
-import datetime
 
 # Create your views here.
 

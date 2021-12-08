@@ -1,18 +1,23 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
 import re
 
+import sys
+import os
+
+from django.conf import settings
+
+from .models import get_plot_path
+# from django_plots import settings
 
 
 def get_arcctg(func_argument: float) -> float: 
     return np.arccos(1 / (1 + func_argument ** 2))
 
 def get_arcth(func_argument: float) -> float:
-
     return 0.5 * np.log((1 + func_argument) / (func_argument - 1)) if func_argument > 1 or func_argument < -1 else float('inf')
 
-def get_log(func_argument: float, base: float) -> float: 
+def get_log(base: float, func_argument: float) -> float: 
     return np.log(func_argument) / np.log(base)
 
 def find_closing_bracket(s: str) -> int:
@@ -65,16 +70,18 @@ def get_plot_function(function_str: str, allowed_func_dict: dict) -> str:
        
     return f
 
-def draw_plot(start_point: float, interval: float, step: float, func) -> None:
-
+def draw_plot(plot_instance) -> None:
+    start_point = plot_instance.start_point
+    interval = plot_instance.interval 
+    step = plot_instance.step
+    func = get_plot_function(plot_instance.plot_function, allowed_func_dict)
     x_axe = [start_point + i * step for i in range(int((start_point + interval) // step))]
-    print(x_axe)
 
     y_axe = list(map(func, x_axe))
     fig, ax = plt.subplots()
     ax.plot(x_axe, y_axe)
-    plt.show()
-    print(type(fig))
+    os.mkdir(settings.MEDIA_ROOT+'/plots/'+str(plot_instance.id))
+    plt.savefig(settings.MEDIA_ROOT+get_plot_path(plot_instance))
     return
 
 allowed_func_dict = {
@@ -104,10 +111,12 @@ allowed_func_dict = {
     'x^': 'x ** ',
 }
 
-
-f = 'cos(cos(cos(cos(x*x*x*x*x*x*x*x*x*x*x*x*x))))*3/x*x*x'
-f2 = get_plot_function(f, allowed_func_dict)
-print(f2)
-x = 1
-print(f2, ' = ', f2(x))
-draw_plot(-100, 200, 0.01, f2)
+if __name__ == '__main__':
+    f = 'cos(cos(cos(cos(x*x*x*x*x*x*x*x*x*x*x*x*x))))*3/x*x*x'
+    f2 = get_plot_function(f, allowed_func_dict)
+    print(f2)
+    x = 1
+    print(f2, ' = ', f2(x))
+    print(sys.path)
+    settings.configure()
+    print(settings.MEDIA_ROOT)

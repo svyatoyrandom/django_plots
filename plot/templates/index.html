@@ -20,21 +20,33 @@
         <script src="" async defer></script>
 
         <p> templates/index.html</p>
+
+        {{form.start_point.errors}}
+        {{form.plot_function.errors}}
+        {{form.step.errors}}
+        {{form.interval.errors}}
+
         <form  action="/plot_params/" method="post">
             {% csrf_token %}
-            {{form}}
+            {{form.start_point.label_tag}}
+            {{form.start_point}}
+            {{form.plot_function.label_tag}}
+            {{form.plot_function}}
+            {{form.step.label_tag}}
+            {{form.step}}
+            {{form.interval.label_tag}}
+            {{form.interval}}
             <input type="submit" value="submit">
         </form>
         <div>
         {% for plot in plots %}
             {{plot.start_point}}<br>
-            {{plot.finish_point}}<br>
             {{plot.interval}}<br>
             {{plot.step}}<br>
             {{plot.plot_function}}<br>
             {{plot.date_upload}}<br>
             {{plot.date_update}}<br>
-            {{plot.plot_image}}<br>
+            <img src="http://127.0.0.1:8000/media{{ plot.plot_image }}"><br>
         {%endfor%}
         </div>
     </body>
