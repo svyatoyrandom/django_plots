@@ -1,3 +1,4 @@
 plot/migrations
-plot/migrations/__pycache__/
+plot/__pycache__
+/media
 
